@@ -10,7 +10,6 @@
   --gr:#22A45D;--gr2:#178A48;--gr3:#4DC87E;--grl:#E6F7EE;
   --bg:#F5F4FF;--card:#fff;--ink:#18183a;--muted:#7878a8;
   --bord:rgba(61,53,200,.13);--sh:0 2px 14px rgba(61,53,200,.10);
-  --map-bg: linear-gradient(145deg, #e8e4f7, #d4c9f0, #f0e9ff); /* lighter purple tint */
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{width:100%;height:100%;overflow:hidden;
@@ -27,7 +26,7 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
   align-items:center;justify-content:flex-start;overflow-y:auto;padding:24px 20px 20px}
 .w-wrap{width:100%;max-width:400px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:0}
 .w-logo-img{width:min(180px,46vw);height:min(180px,46vw);flex-shrink:0;
-  filter:drop-shadow(0 6px 20px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite;border-radius:20px}
+  filter:drop-shadow(0 6px 20px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite}
 .w-title{font-size:clamp(30px,9vw,44px);font-weight:900;color:#fff;text-align:center;
   letter-spacing:-1px;line-height:1;margin:10px 0 4px}
 .w-title em{color:#4DC87E;font-style:normal}
@@ -51,10 +50,6 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
   display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .bcp-lbl{font-size:10px;font-weight:800;color:rgba(255,255,255,.78);
   text-transform:uppercase;letter-spacing:.7px;line-height:1.5}
-
-/* Rules summary */
-.rules-sum{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
-  border-radius:14px;padding:16px;margin:20px 0 10px;width:100%;color:#fff;font-size:13px;line-height:1.5}
 
 /* ══════════ SETUP ══════════ */
 #ss{background:var(--bg)}
@@ -117,7 +112,7 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 .r-foot{padding:9px 12px;background:var(--card);border-top:1px solid var(--bord);flex-shrink:0}
 
 /* ══════════ GAME ══════════ */
-#sg{background:#dcebd8}
+#sg{background:#f3f0ff}
 
 /* Шапка игры */
 .g-hdr{background:var(--pu);padding:7px 12px;
@@ -134,12 +129,11 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
   display:flex;
   align-items:center;
   justify-content:center;
-  overflow:hidden;
-  background:var(--map-bg); /* lighter purple tint */
-  padding:20px 12px; /* increased padding for margins */
-  box-sizing:border-box;
+  overflow:hidden;           /* ← никакого скролла */
+  background:#efeaff;border-radius:24px;margin:12px;
+  padding:18px;
 }
-.map-grid{display:grid;gap:6px;flex-shrink:0} /* slightly larger gap */
+.map-grid{display:grid;gap:4px;flex-shrink:0}
 
 /* Плитка */
 .tile{border-radius:11px;position:relative;border:2px solid rgba(255,255,255,.1);
@@ -147,8 +141,8 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 .tile.can{border:2.5px solid #22A45D;cursor:pointer;
   box-shadow:0 0 0 2px #22A45D,0 0 14px rgba(34,164,93,.55);
   animation:pls 1s ease-in-out infinite}
-.tile.cur{border:3px solid #F7B731 !important; /* more contrast */
-  box-shadow:0 0 0 3px #F7B731,0 0 16px rgba(247,183,49,.7) !important}
+.tile.cur{border:2.5px solid #F7B731;
+  box-shadow:0 0 0 2px #F7B731,0 0 10px rgba(247,183,49,.4)}
 .t-in{width:100%;height:100%;display:flex;flex-direction:column;
   align-items:center;justify-content:center;position:relative}
 .t-icon{line-height:1;z-index:1;position:relative}
@@ -170,15 +164,13 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 .bot-handle{width:36px;height:4px;background:rgba(0,0,0,.11);border-radius:2px;
   margin:8px auto 0}
 
-/* Текущий игрок — more contrast */
-.cur-bar{padding:8px 12px;display:flex;align-items:center;gap:9px;
-  border-bottom:1px solid var(--bord);background:rgba(61,53,200,.06)}
+/* Текущий игрок */
+.cur-bar{padding:8px 12px;display:flex;align-items:center;gap:9px;background:linear-gradient(90deg,#3D35C8,#6B63E0);color:#fff;border:3px solid #22A45D;
+  border-bottom:1px solid var(--bord)}
 .cur-av{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;
-  justify-content:center;font-size:22px;flex-shrink:0;border:3px solid #fff}
+  justify-content:center;font-size:22px;flex-shrink:0}
 .cur-name{font-size:14px;font-weight:900;color:var(--ink)}
 .cur-role{font-size:11px;font-weight:700}
-
-/* ... rest of styles remain mostly the same, with minor tweaks */
 .art-tags{display:flex;gap:3px;margin-top:2px;flex-wrap:wrap}
 .art-tag{padding:2px 6px;border-radius:18px;background:rgba(247,183,49,.14);
   border:1px solid rgba(247,183,49,.32);font-size:9px;font-weight:700;color:#997000}
@@ -190,13 +182,114 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 .tpip{flex-shrink:0;display:flex;align-items:center;gap:5px;
   padding:4px 8px;border-radius:16px;background:rgba(0,0,0,.04);
   border:1.5px solid var(--bord);transition:all .2s}
-.tpip.act{background:rgba(61,53,200,.12);border-color:var(--pu);font-weight:700} /* stronger highlight */
+.tpip.act{background:rgba(61,53,200,.07);border-color:rgba(61,53,200,.25)}
 .tpip-av{width:24px;height:24px;border-radius:50%;border:2px solid #fff;
   display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
 .tpip-n{font-size:11px;font-weight:800;color:var(--ink)}
 .tpip-s{font-size:9px;color:var(--muted)}
 
-/* ... other styles unchanged for brevity */
+/* Подсказка */
+.hint-bar{background:linear-gradient(90deg,rgba(61,53,200,.06),rgba(34,164,93,.04));
+  border-bottom:1px solid var(--bord);padding:6px 12px;
+  display:flex;align-items:flex-start;gap:6px}
+.hint-dot{width:6px;height:6px;border-radius:50%;background:var(--gr);
+  flex-shrink:0;margin-top:4px;animation:blink 1.5s infinite}
+.hint-txt{font-size:11px;color:#3a3a60;font-weight:600;line-height:1.5}
+
+/* Фаза */
+.phase{padding:10px 12px}
+
+/* Погода */
+.wx-blk{border-radius:13px;padding:12px;margin-bottom:9px;
+  display:flex;align-items:center;gap:10px;border:2px solid transparent}
+.wx-em{font-size:36px;flex-shrink:0}
+.wx-title{font-size:15px;font-weight:900;color:var(--ink)}
+.wx-eff{font-size:11px;color:var(--muted);font-weight:600;margin-top:1px}
+
+/* Кубик */
+.dice-zone{display:flex;flex-direction:column;align-items:center;gap:9px;padding:4px 0}
+.die{width:68px;height:68px;border-radius:17px;
+  background:linear-gradient(135deg,var(--pu),var(--pu2));color:#fff;
+  font-size:34px;font-weight:900;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 0 4px rgba(61,53,200,.18),0 6px 22px rgba(61,53,200,.32);
+  transition:transform .12s;user-select:none}
+.die:active{transform:scale(.9)}
+.die.rolling{animation:roll .5s ease-in-out}
+.die-cap{font-size:11px;color:var(--muted);font-weight:600}
+
+/* Результат */
+.res-big{text-align:center;padding:9px;border-radius:13px;margin-bottom:7px}
+.res-num{font-size:48px;font-weight:900;line-height:1}
+.res-lbl{font-size:11px;font-weight:700;margin-top:2px}
+
+/* Способности */
+.ab-row{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:11px;
+  margin-bottom:6px;border:1.5px solid var(--bord);background:#fafafa;
+  font-size:11px;font-weight:600;color:var(--ink)}
+.ab-sp{background:var(--pu);color:#fff;border-color:var(--pu);
+  box-shadow:0 3px 11px rgba(61,53,200,.28);cursor:pointer;transition:all .15s}
+.ab-sp:active{transform:scale(.97)}
+.ab-sp:disabled{background:var(--muted);border-color:var(--muted);box-shadow:none;opacity:.5;cursor:default}
+
+/* Позиция */
+.pos-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:7px}
+.pos-cell{background:var(--bg);border-radius:9px;padding:7px 9px;
+  font-size:11px;font-weight:600;color:#3a3a60;display:flex;align-items:center;gap:4px}
+
+/* Кнопки действий */
+.btn-a{width:100%;padding:13px;border-radius:50px;font-size:13px;font-weight:900;
+  transition:transform .12s,box-shadow .12s;margin-bottom:5px;text-align:center}
+.btn-a:active{transform:scale(.96)}
+.btn-pu{background:linear-gradient(135deg,var(--pu),var(--pu2));color:#fff;
+  box-shadow:0 4px 14px rgba(61,53,200,.28)}
+.btn-gr{background:linear-gradient(135deg,var(--gr),var(--gr2));color:#fff;
+  box-shadow:0 4px 14px rgba(34,164,93,.28)}
+.btn-ol{background:#fff;color:var(--pu);border:2px solid var(--pu)}
+
+/* ══════════ VICTORY ══════════ */
+#sv{background:linear-gradient(168deg,#2A25A0 0%,#3D35C8 50%,#5a50d8 100%);
+  align-items:center;justify-content:center;overflow-y:auto;padding:28px 20px}
+.v-logo{width:70px;height:70px;margin-bottom:6px}
+.v-trophy{font-size:68px;text-align:center;margin-bottom:8px;
+  filter:drop-shadow(0 0 20px rgba(247,183,49,.8));animation:bob 3s ease-in-out infinite}
+.v-title{font-size:28px;font-weight:900;color:#fff;text-align:center;margin-bottom:5px}
+.v-stars{font-size:36px;text-align:center;margin-bottom:5px}
+.v-desc{font-size:13px;color:rgba(255,255,255,.75);text-align:center;
+  margin-bottom:18px;line-height:1.6;font-weight:600}
+.v-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;
+  margin-bottom:16px;width:100%;max-width:340px}
+.vstat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  border-radius:12px;padding:10px;text-align:center}
+.vstat-v{font-size:24px;font-weight:900;color:#fff}
+.vstat-l{font-size:10px;color:rgba(255,255,255,.6);font-weight:700}
+.v-team{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;
+  margin-bottom:16px;width:100%;max-width:340px}
+.vhero{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.2);
+  border-radius:12px;padding:10px 12px;text-align:center;min-width:80px}
+.vhero-icon{font-size:24px;margin-bottom:3px}
+.vhero-name{font-size:10px;font-weight:900;color:#fff}
+.vhero-role{font-size:9px;color:rgba(255,255,255,.6)}
+
+/* ══════════ TOAST ══════════ */
+#toasts{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column-reverse;gap:6px;z-index:9999;
+  pointer-events:none;width:calc(100% - 24px);max-width:360px}
+.toast{padding:10px 16px;border-radius:50px;font-size:12px;font-weight:800;
+  text-align:center;background:rgba(18,18,38,.88);backdrop-filter:blur(12px);
+  color:#fff;border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 4px 18px rgba(0,0,0,.32);animation:tin .26s cubic-bezier(.34,1.56,.64,1)}
+
+/* ══════════ KEYFRAMES ══════════ */
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes pls{0%,100%{box-shadow:0 0 0 2px #22A45D,0 0 8px rgba(34,164,93,.4)}
+  50%{box-shadow:0 0 0 4px #22A45D,0 0 20px rgba(34,164,93,.65)}}
+@keyframes sp{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.22}}
+@keyframes roll{0%{transform:rotate(0)}25%{transform:rotate(-24deg)}
+  75%{transform:rotate(24deg)}100%{transform:rotate(0)}}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pop{0%{transform:scale(.5) rotateY(80deg);opacity:0}
+  65%{transform:scale(1.07)}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
@@ -206,20 +299,44 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 <!-- ████ WELCOME ████ -->
 <div class="scr" id="sw">
 <div class="w-wrap">
-  <!-- Updated logo from attachment -->
-  <img src="/home/workdir/attachments/лого_вариант.webp" class="w-logo-img" alt="Логотип В Поход!">
+  <img class="w-logo-img" src="лого_вариант.webp" alt="Логотип"/>
+  <svg style="display:none" class="w-logo-img" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <!-- Круг -->
+    <circle cx="100" cy="88" r="74" fill="none" stroke="#3D35C8" stroke-width="5"/>
+    <!-- Горы -->
+    <polygon points="100,28 142,100 58,100" fill="#3D35C8"/>
+    <polygon points="64,58 86,100 42,100" fill="#3D35C8" opacity=".75"/>
+    <polygon points="136,60 158,100 114,100" fill="#3D35C8" opacity=".75"/>
+    <!-- Снег на вершинах -->
+    <polygon points="100,28 110,52 90,52" fill="white" opacity=".85"/>
+    <polygon points="64,58 70,73 58,73" fill="white" opacity=".7"/>
+    <polygon points="136,60 142,75 130,75" fill="white" opacity=".7"/>
+    <!-- Ёлки -->
+    <polygon points="44,100 54,68 64,100" fill="#22A45D"/>
+    <rect x="52" y="100" width="4" height="10" rx="2" fill="#178A48"/>
+    <polygon points="136,100 146,70 156,100" fill="#22A45D"/>
+    <rect x="144" y="100" width="4" height="10" rx="2" fill="#178A48"/>
+    <!-- Луг -->
+    <ellipse cx="100" cy="106" rx="60" ry="13" fill="#22A45D" opacity=".6"/>
+    <!-- Человек — корпус и голова -->
+    <circle cx="94" cy="72" r="10" fill="#3D35C8"/>
+    <rect x="87" y="82" width="16" height="22" rx="6" fill="#3D35C8"/>
+    <!-- Рюкзак -->
+    <rect x="72" y="84" width="16" height="18" rx="5" fill="#22A45D"/>
+    <rect x="75" y="91" width="10" height="7" rx="2" fill="#178A48"/>
+    <rect x="73" y="86" width="2" height="12" rx="1" fill="#178A48"/>
+    <rect x="87" y="86" width="2" height="12" rx="1" fill="#178A48"/>
+    <!-- Карта в руках -->
+    <rect x="100" y="84" width="18" height="13" rx="3" fill="white" opacity=".92"/>
+    <circle cx="110" cy="89" r="2.5" fill="#3D35C8"/>
+    <path d="M106 93 q5-3 8 1" stroke="#3D35C8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <!-- Кепка -->
+    <path d="M84 72 q10-14 20 0" fill="#3D35C8"/>
+    <rect x="82" y="71" width="5" height="3" rx="1.5" fill="#3D35C8"/>
+  </svg>
 
   <h1 class="w-title">В <em>Поход!</em></h1>
   <p class="w-sub">Больше чем путешествие · Походы Первых</p>
-
-  <div class="rules-sum">
-    <strong>Правила вкратце:</strong><br>
-    • Двигайтесь командой от Базы к Промежуточной цели и Главной цели.<br>
-    • Каждый ход: погода + бросок кубика для движения.<br>
-    • Используйте роли и артефакты для помощи друг другу.<br>
-    • Обменивайтесь предметами и применяйте способности.<br>
-    • Победа — когда вся команда на финише. Нет проигрыша!
-  </div>
 
   <div class="w-feats">
     <div class="w-feat"><div class="wf-icon">🗺️</div>
@@ -232,7 +349,10 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
       <div><div class="wf-t">Победа вместе</div><div class="wf-d">Командная игра</div></div></div>
   </div>
 
-  <button class="btn-cta" id="btn-start">🚀 Начать поход</button>
+  <div class="info-box" style="background:rgba(255,255,255,.12);color:white;border-color:rgba(255,255,255,.2);margin-bottom:14px">
+<b>Как играть:</b><br>1. Выберите игроков и роли.<br>2. По очереди ходите по карте к промежуточной цели и финишу.<br>3. Для сложных клеток бросайте кубик.<br>4. Используйте способности и артефакты команды.<br>5. Побеждает вся команда, когда последний участник достигает финиша.
+</div>
+<button class="btn-cta" id="btn-start">🚀 Начать поход</button>
 
   <div class="w-bcp">
     <div class="bcp-sq">
@@ -243,21 +363,771 @@ button{cursor:pointer;border:none;outline:none;font-family:inherit;font-weight:7
 </div>
 </div>
 
-<!-- Rest of the HTML remains the same, but with updates in script for tourist code and adjustments -->
+<!-- ████ SETUP ████ -->
+<div class="scr off" id="ss">
+  <div class="hdr">
+    <button class="btn-bk" id="ss-back">←</button>
+    <h2>Настройки похода</h2>
+  </div>
+  <div class="s-body">
+    <div class="s-card">
+      <div class="s-lbl">Количество игроков</div>
+      <div class="num-row" id="cnt-row"></div>
+    </div>
+    <div class="s-card">
+      <div class="s-lbl">Размер карты</div>
+      <div class="sz-row">
+        <button class="btn-sz" data-v="small">4×4<br><span style="font-size:9px;opacity:.65">Малая</span></button>
+        <button class="btn-sz on" data-v="medium">5×5<br><span style="font-size:9px;opacity:.65">Средняя</span></button>
+        <button class="btn-sz" data-v="large">6×6<br><span style="font-size:9px;opacity:.65">Большая</span></button>
+      </div>
+    </div>
+    <div class="info-box">
+      🎯 Дойти всей командой: База → Промежуточная цель → Финиш<br>
+      📍 За ход — максимум одна клетка<br>
+      🎲 Бросок кубика нужен для входа на сложные клетки<br>
+      🤝 Помогайте друг другу способностями и артефактами
+    </div>
+  </div>
+  <div class="s-foot">
+    <button class="btn-nx" id="ss-next">Выбрать роли →</button>
+  </div>
+</div>
 
-<!-- (full script updated below in edits) -->
+<!-- ████ ROLES ████ -->
+<div class="scr off" id="sr">
+  <div class="r-hdr">
+    <div class="r-hdr-row">
+      <button class="btn-bk" id="sr-back">←</button>
+      <h2>Выберите роли</h2>
+      <button class="btn-rand" id="btn-rand">🎲 Случайно</button>
+    </div>
+    <div class="ptabs" id="ptabs"></div>
+  </div>
+  <div class="r-grid" id="roles-grid"></div>
+  <div class="r-foot">
+    <button class="btn-nx" id="sr-next" disabled>🏕️ В поход!</button>
+  </div>
+</div>
+
+<!-- ████ GAME ████ -->
+<div class="scr off" id="sg">
+  <div class="g-hdr">
+    <div class="g-brand" style="display:flex;align-items:center;gap:6px">
+      <svg class="g-logo-mini" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="13" cy="12" r="11" fill="rgba(255,255,255,.15)" stroke="rgba(255,255,255,.35)" stroke-width="1.5"/>
+        <polygon points="13,4 19,14 7,14" fill="white" opacity=".9"/>
+        <polygon points="7,14 10,14 8.5,9" fill="rgba(0,0,0,.2)"/>
+        <polygon points="4,14 7,7 10,14" fill="#22A45D" opacity=".9"/>
+        <polygon points="16,14 19,8 22,14" fill="#22A45D" opacity=".9"/>
+        <ellipse cx="13" cy="15.5" rx="9" ry="3" fill="#22A45D" opacity=".55"/>
+      </svg>
+      <span class="g-brand">В Поход!</span>
+    </div>
+    <div class="g-pills">
+      <div class="g-pill" id="g-round">Раунд 1</div>
+      <div class="g-pill" id="g-wx">☀️ Ясно</div>
+    </div>
+  </div>
+
+  <!-- Карта — строго ограниченная по высоте -->
+  <div class="map-wrap" id="map-wrap">
+    <div class="map-grid" id="map-grid"></div>
+  </div>
+
+  <!-- Нижняя панель -->
+  <div class="bot" id="bot">
+    <div class="bot-handle"></div>
+    <div class="cur-bar" id="cur-bar"></div>
+    <div class="team-bar" id="team-bar"></div>
+    <div class="hint-bar"><div class="hint-dot"></div><div class="hint-txt" id="hint-txt"></div></div>
+    <div class="phase" id="phase-block"></div>
+  </div>
+</div>
+
+<!-- ████ VICTORY ████ -->
+<div class="scr off" id="sv">
+  <svg class="v-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="88" r="74" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="5"/>
+    <polygon points="100,28 142,100 58,100" fill="white" opacity=".9"/>
+    <polygon points="64,58 86,100 42,100" fill="white" opacity=".5"/>
+    <polygon points="136,60 158,100 114,100" fill="white" opacity=".5"/>
+    <polygon points="100,28 110,52 90,52" fill="#4DC87E"/>
+    <polygon points="44,100 54,68 64,100" fill="#22A45D"/>
+    <polygon points="136,100 146,70 156,100" fill="#22A45D"/>
+    <ellipse cx="100" cy="106" rx="60" ry="13" fill="#22A45D" opacity=".6"/>
+  </svg>
+  <div class="v-trophy">🏆</div>
+  <h1 class="v-title">Поход завершён!</h1>
+  <div class="v-stars" id="v-stars"></div>
+  <p class="v-desc" id="v-desc"></p>
+  <div id="tourist-code" style="max-width:340px;color:white;background:rgba(255,255,255,.12);padding:12px;border-radius:12px;margin-bottom:12px"></div>
+  <div class="v-stats" id="v-stats"></div>
+  <div class="v-team" id="v-team"></div>
+  <button class="btn-a btn-gr" style="max-width:260px;margin-top:4px" onclick="location.reload()">🔄 Новый поход</button>
+  <div style="margin-top:14px;display:flex;align-items:center;gap:7px;opacity:.6">
+    <div style="width:20px;height:20px;background:#22A45D;border-radius:6px;
+      display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg width="11" height="11" viewBox="0 0 20 20"><polygon points="2,2 14,2 18,10 14,18 2,18" fill="white"/></svg>
+    </div>
+    <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.8)">Больше, чем путешествие · Походы Первых</div>
+  </div>
+</div>
+
 <script>
-/* ... (data and most functions unchanged) ... */
+/* ════════════════════════════════════════
+   ДАННЫЕ
+════════════════════════════════════════ */
+const TERRAIN = {
+  plain:   {l:"Равнина",icon:"🌿",bg:"#48a84a",bg2:"#357a38",check:false},
+  forest:  {l:"Лес",   icon:"🌲",bg:"#2b6e30",bg2:"#1a4420",check:false},
+  water:   {l:"Водоём",icon:"💧",bg:"#1a78d4",bg2:"#0e4e99",check:true,need:1},
+  swamp:   {l:"Болото",icon:"🍃",bg:"#5a8c2a",bg2:"#3a5e18",check:true,need:6},
+  mountain:{l:"Горы",  icon:"⛰️",bg:"#607d8b",bg2:"#3d545e",check:true,need:4},
+};
+const TERRAIN_KEYS = ['plain','forest','water','swamp','mountain'];
 
-/* Add Tourist Code */
-const TOURIST_CODE = [
-  "Уважай природу и не оставляй мусор.",
-  "Помогай товарищам в трудную минуту.",
-  "Сохраняй спокойствие и поддерживай командный дух.",
-  "Изучай историю и культуру родного края.",
-  "Будь ответственным за безопасность группы."
+const WEATHER = [
+  {id:"sunny", l:"Ясно",      icon:"☀️",eff:"Бросок +1",              col:"#F7B731",bg:"rgba(247,183,49,.13)"},
+  {id:"cloudy",l:"Облачность",icon:"⛅",eff:"Без эффектов",            col:"#90A4AE",bg:"rgba(144,164,174,.13)"},
+  {id:"rain",  l:"Дождь",     icon:"🌧️",eff:"Сложная местность: +1 к требованию",col:"#42a5f5",bg:"rgba(66,165,245,.13)"},
+  {id:"heat",  l:"Жара",      icon:"🔥",eff:"Равнина и горы: бросок −1",col:"#FF7043",bg:"rgba(255,112,67,.13)"},
+  {id:"wind",  l:"Ветер",     icon:"💨",eff:"Нельзя идти назад",       col:"#78909C",bg:"rgba(120,144,156,.13)"},
+  {id:"fog",   l:"Туман",     icon:"🌫️",eff:"+1 к требованию входа",  col:"#B0BEC5",bg:"rgba(176,190,197,.13)"},
+];
+const ROLES = [
+  {id:"scout",  l:"Разведчик",         icon:"🧭",col:"#22A45D",
+   passive:"Открывает 1 соседнюю плитку в начале хода",
+   action:"⚡ Быстрый марш — доп. ход (1×/партию)",maxSp:1},
+  {id:"explorer",l:"Исследователь",    icon:"🔭",col:"#3D35C8",
+   passive:"Игнорирует требование сложной местности",
+   action:"🗺️ Разведка — открыть любую плитку (1×/партию)",maxSp:1},
+  {id:"camp",   l:"Хранитель лагеря",  icon:"🍲",col:"#e53935",
+   passive:"Снимает штраф у любого за ход",
+   action:"🏕️ Привал — отменить погоду (1×/партию)",maxSp:1},
+  {id:"vibe",   l:"Атмосфера",         icon:"🎵",col:"#7B1FA2",
+   passive:"+1 к броску союзнику раз в раунд",
+   action:"✨ Буст — убрать штраф с игрока (2×/партию)",maxSp:2},
+  {id:"memory", l:"Впечатления",       icon:"📸",col:"#E67E22",
+   passive:"Жетон истории за каждую новую плитку",
+   action:"🌟 Кадр — жетоны в бонус броска (1×/партию)",maxSp:1},
+  {id:"rescue", l:"Спасатель",         icon:"🛡️",col:"#C62828",
+   passive:"Нейтрализует серьёзный штраф за ход",
+   action:"🚁 Спасательная операция (1×/партию)",maxSp:1,startArt:"gear"},
+];
+const ARTIFACTS = [
+  {id:"compass",icon:"🧭",l:"Компас",      eff:"Соседние плитки видны сразу"},
+  {id:"float",  icon:"🚣",l:"Плавсредство",eff:"Водоём — любой бросок проходит"},
+  {id:"hat",    icon:"🧢",l:"Шляпа",       eff:"Нейтрализует Жару"},
+  {id:"gear",   icon:"⛺",l:"Снаряжение",  eff:"Болото без броска «6»"},
 ];
 
+/* ════════════════════════════════════════
+   STATE
+════════════════════════════════════════ */
+const S={
+  pCount:2, mapSize:"medium", assign:{}, selP:0,
+  players:[], map:[], dims:0,
+  cidx:0, round:1, wx:null,
+  phase:"wx",
+  diceVal:null, wxOff:false, spDone:false, marching:false,
+  _pendingTile:null, _tileSize:60,
+};
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function go(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.add('off'));
+  document.getElementById(id).classList.remove('off');
+}
+function toast(txt,col="#22A45D"){
+  const w=document.getElementById('toasts');
+  const d=document.createElement('div');
+  d.className='toast';d.style.borderColor=col+'50';d.textContent=txt;
+  w.appendChild(d);setTimeout(()=>d&&d.remove(),2600);
+}
+function d6(){return Math.floor(Math.random()*6)+1;}
+
+/* ════════════════════════════════════════
+   ГЕНЕРАЦИЯ КАРТЫ — гарантирует минимум 1 плитку каждого типа
+════════════════════════════════════════ */
+function buildMap(size){
+  const dims={small:4,medium:5,large:6}[size]||5;
+  const n=dims*dims;
+
+  // Гарантируем минимум 1 каждого типа (5 типов)
+  const pool=['plain','forest','water','swamp','mountain'];
+
+  // Добавляем по пропорции оставшееся
+  const extras=n-pool.length; // n-5 доп клеток
+  const dist={plain:.34,forest:.20,water:.16,swamp:.15,mountain:.15};
+  for(const[t,r] of Object.entries(dist)){
+    let c=Math.round(extras*r);
+    for(let i=0;i<c;i++)pool.push(t);
+  }
+  // Добить до нужного размера равниной
+  while(pool.length<n)pool.push('plain');
+  // Обрезать если лишнее
+  while(pool.length>n)pool.pop();
+
+  // Перемешать, но НЕ ставить сложные типы на старт/финиш/середину
+  pool.sort(()=>Math.random()-.5);
+
+  const tiles=[];
+  const specialIds=new Set();
+  const base=0, goal=n-1;
+  const mid=Math.floor(dims/2)*dims+Math.floor(dims/2);
+  specialIds.add(base);specialIds.add(goal);specialIds.add(mid);
+
+  for(let r=0;r<dims;r++)for(let c=0;c<dims;c++){
+    const id=r*dims+c;
+    const isBase=id===base,isGoal=id===goal,isMid=id===mid;
+    tiles.push({id,row:r,col:c,
+      terrain:(isBase||isGoal||isMid)?'plain':pool[id],
+      revealed:isBase,isBase,isGoal,isMid,artifact:null});
+  }
+
+  // Раскидываем артефакты
+  const ap=[...ARTIFACTS].sort(()=>Math.random()-.5);
+  let p=0;
+  for(const t of tiles){
+    if(!t.isBase&&!t.isGoal&&!t.isMid&&p<3&&Math.random()<.25)
+      t.artifact=ap[p++].id;
+  }
+  return{tiles,dims};
+}
+
+function nbrs(id){
+  const t=S.map[id];
+  return[[-1,0],[1,0],[0,-1],[0,1]]
+    .map(([dr,dc])=>({r:t.row+dr,c:t.col+dc}))
+    .filter(({r,c})=>r>=0&&r<S.dims&&c>=0&&c<S.dims)
+    .map(({r,c})=>S.map[r*S.dims+c]);
+}
+
+function reveal(id){
+  S.map[id].revealed=true;
+  const cur=S.players[S.cidx];
+  if(cur&&cur.arts.some(a=>a.id==='compass'))
+    nbrs(id).forEach(n=>{n.revealed=true;});
+  renderMap();
+  const el=document.querySelector(`[data-t="${id}"]`);
+  if(el)el.style.animation='pop .4s cubic-bezier(.34,1.56,.64,1)';
+}
+
+/* ════════════════════════════════════════
+   РАСЧЁТ РАЗМЕРА ПЛИТОК — вписывает карту в экран
+════════════════════════════════════════ */
+function calcTileSize(){
+  // Высота нижней панели примерно 44% экрана (но не меньше 200px и не больше 260px)
+  const screenH=window.innerHeight;
+  const screenW=window.innerWidth;
+  const headerH=42; // g-hdr
+  const panelH=Math.min(Math.max(screenH*0.42,200),260);
+  const mapH=screenH-headerH-panelH;
+  const mapW=screenW;
+
+  // Учитываем padding 8px со всех сторон и gap 4px между плитками
+  const pad=16; // 8*2
+  const gaps=4*(S.dims-1);
+  const availW=(mapW-pad-gaps)/S.dims;
+  const availH=(mapH-pad-gaps)/S.dims;
+  // Берём минимум, чтобы вписалось по обоим осям
+  return Math.floor(Math.min(availW,availH,90));
+}
+
+/* ════════════════════════════════════════
+   SETUP SCREEN
+════════════════════════════════════════ */
+function initSetup(){
+  const row=document.getElementById('cnt-row');row.innerHTML='';
+  [2,3,4,5,6].forEach(n=>{
+    const b=document.createElement('button');
+    b.className='btn-n'+(n===S.pCount?' on':'');
+    b.textContent=n;
+    b.onclick=()=>{S.pCount=n;initSetup();};
+    row.appendChild(b);
+  });
+}
+
+document.getElementById('btn-start').onclick=()=>{go('ss');initSetup();};
+document.getElementById('ss-back').onclick=()=>go('sw');
+document.querySelectorAll('.btn-sz').forEach(b=>b.onclick=function(){
+  document.querySelectorAll('.btn-sz').forEach(x=>x.classList.remove('on'));
+  this.classList.add('on');S.mapSize=this.dataset.v;
+});
+document.getElementById('ss-next').onclick=()=>{
+  go('sr');S.assign={};S.selP=0;renderRoles();
+};
+document.getElementById('sr-back').onclick=()=>go('ss');
+
+/* ════════════════════════════════════════
+   ROLES SCREEN
+════════════════════════════════════════ */
+function renderRoles(){
+  const pids=Array.from({length:S.pCount},(_,i)=>i);
+
+  // Табы игроков
+  const tabs=document.getElementById('ptabs');tabs.innerHTML='';
+  pids.forEach(i=>{
+    const role=S.assign[i]?ROLES.find(r=>r.id===S.assign[i]):null;
+    const b=document.createElement('button');
+    b.className='ptab'+(i===S.selP?' cur':role?' done':'');
+    b.textContent=(role?role.icon+' ':'')+'Игрок '+(i+1);
+    b.onclick=()=>{S.selP=i;renderRoles();};
+    tabs.appendChild(b);
+  });
+
+  // Карточки ролей
+  const grid=document.getElementById('roles-grid');grid.innerHTML='';
+  ROLES.forEach(role=>{
+    const takenBy=pids.find(i=>S.assign[i]===role.id&&i!==S.selP);
+    const sel=S.assign[S.selP]===role.id;
+    const d=document.createElement('div');
+    d.className='rc'+(sel?' sel':'')+(takenBy!==undefined?' taken':'');
+    if(sel)d.style.borderColor=role.col;
+    d.innerHTML=`
+      <div class="rc-icon">${role.icon}</div>
+      <div class="rc-name">${role.l}</div>
+      <div class="rc-hint">${role.passive}</div>
+      <div class="rc-sp">${role.action}</div>
+      ${takenBy!==undefined?`<div style="font-size:9px;color:#aaa;margin-top:1px">→ Игрок ${takenBy+1}</div>`:''}`;
+    d.onclick=()=>{
+      if(takenBy!==undefined)return;
+      pids.forEach(i=>{if(S.assign[i]===role.id)delete S.assign[i];});
+      S.assign[S.selP]=role.id;
+      const nxt=pids.find(i=>i!==S.selP&&!S.assign[i]);
+      if(nxt!==undefined)setTimeout(()=>{S.selP=nxt;renderRoles();},150);
+      else renderRoles();
+    };
+    grid.appendChild(d);
+  });
+
+  const allDone=pids.every(i=>S.assign[i]);
+  document.getElementById('sr-next').disabled=!allDone;
+}
+
+// Случайное распределение ролей
+document.getElementById('btn-rand').onclick=()=>{
+  const pids=Array.from({length:S.pCount},(_,i)=>i);
+  const shuffled=[...ROLES].sort(()=>Math.random()-.5).slice(0,S.pCount);
+  S.assign={};
+  pids.forEach((pid,i)=>{S.assign[pid]=shuffled[i].id;});
+  S.selP=0;
+  renderRoles();
+  toast('🎲 Роли распределены случайно!');
+};
+
+document.getElementById('sr-next').onclick=startGame;
+
+/* ════════════════════════════════════════
+   СТАРТ ИГРЫ
+════════════════════════════════════════ */
+function startGame(){
+  const pids=Array.from({length:S.pCount},(_,i)=>i);
+  S.players=pids.map(i=>{
+    const role=ROLES.find(r=>r.id===S.assign[i]);
+    const sa=role.startArt?[ARTIFACTS.find(a=>a.id===role.startArt)]:[];
+    return{id:i,name:'Игрок '+(i+1),role,tileId:0,
+      arts:sa,spUsed:0,tokens:0,reachedMid:false,finished:false};
+  });
+  const{tiles,dims}=buildMap(S.mapSize);
+  S.map=tiles;S.dims=dims;
+  S.cidx=0;S.round=1;
+  S.wx=WEATHER[Math.floor(Math.random()*6)];
+  S.phase='wx';S.diceVal=null;
+  S.wxOff=false;S.spDone=false;S.marching=false;S._pendingTile=null;
+
+  go('sg');
+
+  // Пересчитываем размер плитки после перехода (DOM обновился)
+  setTimeout(()=>{
+    S._tileSize=calcTileSize();
+    renderMap();
+    renderGame();
+  },30);
+}
+
+/* ════════════════════════════════════════
+   РЕНДЕР КАРТЫ
+════════════════════════════════════════ */
+function renderMap(){
+  const grid=document.getElementById('map-grid');
+  const sz=S._tileSize;
+  grid.style.gridTemplateColumns=`repeat(${S.dims},${sz}px)`;
+  grid.style.gap='4px';
+
+  const cur=S.players[S.cidx];
+  const nbrIds=nbrs(cur.tileId).map(n=>n.id);
+  const iconSz=Math.max(14,Math.floor(sz*0.34));
+  const avSz=Math.max(14,Math.floor(sz*0.26));
+
+  // Пересоздаём если нужно
+  if(grid.children.length!==S.map.length){
+    grid.innerHTML='';
+    S.map.forEach(t=>{
+      const el=document.createElement('div');
+      el.dataset.t=t.id;
+      el.style.width=sz+'px';el.style.height=sz+'px';
+      el.onclick=()=>onTileClick(t.id);
+      grid.appendChild(el);
+    });
+  }
+
+  S.map.forEach(t=>{
+    const el=grid.querySelector(`[data-t="${t.id}"]`);
+    if(!el)return;
+    el.style.width=sz+'px';el.style.height=sz+'px';
+
+    const canEnter=S.phase==='pick'&&nbrIds.includes(t.id);
+    const isCur=cur.tileId===t.id;
+    el.className='tile'+(canEnter?' can':isCur?' cur':'');
+
+    const T=TERRAIN[t.terrain];
+    el.style.background=t.revealed
+      ?`linear-gradient(135deg,${T.bg},${T.bg2})`
+      :'linear-gradient(135deg,#1e3820,#263e29)';
+
+    const playersHere=S.players.filter(p=>p.tileId===t.id);
+
+    el.innerHTML=`<div class="t-in" style="width:${sz-4}px;height:${sz-4}px">
+      ${t.revealed
+        ?`<div class="t-icon" style="font-size:${iconSz}px">${T.icon}</div>
+          ${t.isBase?'<div class="t-mark">🏕️</div>':''}
+          ${t.isMid?'<div class="t-mark">🎯</div>':''}
+          ${t.isGoal?'<div class="t-mark">🏆</div>':''}
+          ${t.artifact?'<div class="t-art">✨</div>':''}`
+        :`<div class="t-fog">?</div>`}
+      ${playersHere.length
+        ?`<div class="t-avs">${playersHere.map(p=>`
+          <div class="t-av" style="width:${avSz}px;height:${avSz}px;
+            background:${p.role.col};font-size:${Math.max(9,avSz-6)}px">${p.role.icon}</div>
+          `).join('')}</div>`:''}
+    </div>`;
+  });
+}
+
+/* ════════════════════════════════════════
+   РЕНДЕР ИГРОВОЙ ПАНЕЛИ
+════════════════════════════════════════ */
+function renderGame(){
+  const cur=S.players[S.cidx];
+
+  // Шапка
+  document.getElementById('g-round').textContent='Раунд '+S.round;
+  const wxEl=document.getElementById('g-wx');
+  wxEl.textContent=(S.wxOff?'✕ ':'')+S.wx.icon+' '+(S.wxOff?'Отменено':S.wx.l);
+  wxEl.style.background=S.wxOff?'rgba(255,255,255,.1)':S.wx.bg;
+
+  // Текущий игрок
+  document.getElementById('cur-bar').innerHTML=`
+    <div class="cur-av" style="background:linear-gradient(135deg,${cur.role.col},${cur.role.col}99)">
+      ${cur.role.icon}
+    </div>
+    <div style="flex:1;min-width:0">
+      <div class="cur-name">${cur.name}</div>
+      <div class="cur-role" style="color:${cur.role.col}">${cur.role.l}</div>
+      ${cur.arts.length?`<div class="art-tags">${cur.arts.map(a=>`
+        <div class="art-tag">${a.icon} ${a.l}</div>`).join('')}</div>`:''}
+    </div>
+    ${cur.tokens>0?`<div style="background:rgba(247,183,49,.13);border:1px solid rgba(247,183,49,.3);
+      border-radius:18px;padding:3px 8px;font-size:10px;font-weight:800;color:#997000;white-space:nowrap">
+      📸×${cur.tokens}</div>`:''}`;
+
+  // Команда
+  const tb=document.getElementById('team-bar');tb.innerHTML='';
+  S.players.forEach((p,i)=>{
+    const d=document.createElement('div');
+    d.className='tpip'+(i===S.cidx?' act':'');
+    d.innerHTML=`<div class="tpip-av" style="background:${p.role.col}">${p.role.icon}</div>
+      <div>
+        <div class="tpip-n">${p.name}</div>
+        <div class="tpip-s">${p.finished?'🏆 Финиш':p.reachedMid?'🎯 К финишу':'🚶 В пути'}</div>
+      </div>`;
+    tb.appendChild(d);
+  });
+
+  // Подсказка
+  const HINTS={
+    wx:`Погода: ${S.wx.icon} ${S.wx.l} — ${S.wx.eff}`,
+    role:'Используй способность или выбирай клетку для хода',
+    pick:'Нажми на светящуюся соседнюю клетку',
+    roll:`Нажми кубик — нужно ${S._pendingNeed||'?'}+ для входа`,
+    stop:'Горы остановили ход. Передавай ход дальше',
+    next:'Ход окончен. Передай ход следующему',
+  };
+  document.getElementById('hint-txt').textContent=HINTS[S.phase]||'';
+
+  renderPhase();
+}
+
+/* ════════════════════════════════════════
+   РЕНДЕР ФАЗЫ
+════════════════════════════════════════ */
+function renderPhase(){
+  const cur=S.players[S.cidx];
+  const pb=document.getElementById('phase-block');
+
+  /* ── ПОГОДА ── */
+  if(S.phase==='wx'){
+    pb.innerHTML=`
+      <div class="wx-blk" style="background:${S.wx.bg};border-color:${S.wx.col}40">
+        <div class="wx-em">${S.wx.icon}</div>
+        <div><div class="wx-title">${S.wx.l}</div>
+        <div class="wx-eff">${S.wx.eff}</div></div>
+      </div>
+      <button class="btn-a btn-pu" id="ph-btn">✓ Принять и ходить</button>`;
+    document.getElementById('ph-btn').onclick=doWxOk;
+    return;
+  }
+
+  /* ── РОЛЬ ── */
+  if(S.phase==='role'){
+    const canSp=!S.spDone&&cur.spUsed<cur.role.maxSp;
+    pb.innerHTML=`
+      <div class="ab-row" style="cursor:default;font-size:11px">
+        <span style="font-size:16px">${cur.role.icon}</span>
+        <span>${cur.role.passive}</span>
+      </div>
+      <button class="ab-row ab-sp" id="sp-btn" ${canSp?'':'disabled'} style="font-size:11px">
+        ${cur.role.action}
+        <span style="margin-left:auto;font-size:9px;opacity:.7">${cur.spUsed}/${cur.role.maxSp}</span>
+      </button>
+      <button class="btn-a btn-gr" id="ph-btn" style="margin-top:4px">📍 Выбрать клетку</button>`;
+    if(canSp)document.getElementById('sp-btn').onclick=doSpecial;
+    document.getElementById('ph-btn').onclick=()=>{S.phase='pick';renderGame();renderMap();};
+    return;
+  }
+
+  /* ── ВЫБОР КЛЕТКИ ── */
+  if(S.phase==='pick'){
+    const curTile=S.map[cur.tileId];
+    const canSp=!S.spDone&&cur.spUsed<cur.role.maxSp;
+    pb.innerHTML=`
+      <div class="pos-grid" style="margin-bottom:7px">
+        <div class="pos-cell">📍 ${TERRAIN[curTile.terrain].l}</div>
+        <div class="pos-cell">${cur.reachedMid?'🎯 Промежут. ✓':'⬆️ Двигайся вперёд'}</div>
+      </div>
+      ${canSp?`<button class="ab-row ab-sp" id="sp-btn" style="font-size:11px;margin-bottom:6px">
+        ⚡ ${cur.role.action}</button>`:''}
+      <button class="btn-a btn-ol" id="ph-btn">⏹ Остаться (пропустить ход)</button>`;
+    const spb=document.getElementById('sp-btn');
+    if(spb)spb.onclick=doSpecial;
+    document.getElementById('ph-btn').onclick=()=>{S.phase='next';renderGame();};
+    return;
+  }
+
+  /* ── БРОСОК ── */
+  if(S.phase==='roll'){
+    pb.innerHTML=`
+      <div class="dice-zone">
+        <div class="die" id="die-el">🎲</div>
+        <div class="die-cap">Нажми, чтобы бросить!</div>
+      </div>`;
+    document.getElementById('die-el').onclick=doRoll;
+    return;
+  }
+
+  /* ── СТОП (горы) ── */
+  if(S.phase==='stop'){
+    pb.innerHTML=`
+      <div style="background:rgba(96,125,139,.1);border:1.5px solid rgba(96,125,139,.25);
+        border-radius:12px;padding:10px 12px;font-size:12px;font-weight:600;
+        color:#3d545e;text-align:center;margin-bottom:8px">
+        ⛰️ Вход в горы остановил ход
+        ${cur.finished?'<br>🏆 <b>Игрок финишировал!</b>':''}
+      </div>
+      <button class="btn-a btn-pu" id="ph-btn">➡ Следующий игрок</button>`;
+    document.getElementById('ph-btn').onclick=doEndTurn;
+    return;
+  }
+
+  /* ── КОНЕЦ ХОДА ── */
+  if(S.phase==='next'){
+    const tile=S.map[cur.tileId];
+    pb.innerHTML=`
+      <div class="pos-grid" style="margin-bottom:7px">
+        <div class="pos-cell">📍 ${TERRAIN[tile.terrain].l}</div>
+        <div class="pos-cell">${cur.reachedMid?'🎯 Промежут. ✓':'🚶 Ещё в пути'}</div>
+        ${cur.finished?`<div class="pos-cell" style="grid-column:1/-1;color:#22A45D;font-weight:900">
+          🏆 Финишировал!</div>`:''}
+      </div>
+      <button class="btn-a btn-pu" id="ph-btn">➡ Следующий игрок</button>`;
+    document.getElementById('ph-btn').onclick=doEndTurn;
+    return;
+  }
+}
+
+/* ════════════════════════════════════════
+   ЛОГИКА ХОДА
+════════════════════════════════════════ */
+function doWxOk(){
+  const cur=S.players[S.cidx];
+  if(cur.role.id==='scout'){
+    const closed=nbrs(cur.tileId).filter(t=>!t.revealed);
+    if(closed.length){reveal(closed[0].id);toast('🧭 Разведчик открыл плитку!');}
+  }
+  S.phase='role';renderGame();renderMap();
+}
+
+function doSpecial(){
+  const cur=S.players[S.cidx];
+  if(S.spDone||cur.spUsed>=cur.role.maxSp)return;
+  const r=cur.role.id;
+  if(r==='scout'){S.marching=true;toast('⚡ Быстрый марш — получишь ещё один ход!');}
+  else if(r==='explorer'){
+    const cl=S.map.filter(t=>!t.revealed);
+    if(cl.length){const t=cl[Math.floor(Math.random()*cl.length)];reveal(t.id);
+      toast(`🔭 Открыта: ${TERRAIN[t.terrain].l}`);}
+  }
+  else if(r==='camp'){S.wxOff=true;toast('🍲 Погода отменена для команды!');}
+  else if(r==='vibe'){toast('🎵 Бонус +1 к следующему броску!');}
+  else if(r==='memory'){toast(`📸 ${cur.tokens} жетонов — бонус к броску!`);}
+  else if(r==='rescue'){toast('🛡️ Спасательная операция!');}
+  S.spDone=true;cur.spUsed++;
+  renderGame();renderMap();
+}
+
+function onTileClick(tileId){
+  if(S.phase!=='pick')return;
+  const cur=S.players[S.cidx];
+  if(!nbrs(cur.tileId).find(n=>n.id===tileId))return;
+
+  const tile=S.map[tileId];
+  const T=TERRAIN[tile.terrain];
+  const wx=S.wxOff?'cloudy':S.wx.id;
+
+  // Ветер — нельзя назад
+  if(wx==='wind'){
+    const ct=S.map[cur.tileId];
+    if(tile.row<ct.row||(tile.row===ct.row&&tile.col<ct.col)){
+      toast('💨 Ветер: нельзя идти назад!','#FF7043');return;
+    }
+  }
+
+  if(T.check){
+    const skip=(cur.role.id==='explorer')||
+      (tile.terrain==='swamp'&&cur.arts.some(a=>a.id==='gear'))||
+      (tile.terrain==='water'&&cur.arts.some(a=>a.id==='float'));
+    if(!skip){
+      // Нужен бросок
+      let need=T.need;
+      if(wx==='fog')need=Math.min(6,need+1);
+      if(wx==='rain'&&T.check)need=Math.min(6,need+1);
+      S._pendingTile=tileId;
+      S._pendingNeed=need;
+      S.phase='roll';
+      renderGame();renderMap();
+      return;
+    }
+  }
+  enterTile(tileId,null);
+}
+
+function doRoll(){
+  const die=document.getElementById('die-el');
+  if(!die)return;
+  die.classList.add('rolling');
+  let tick=0;
+  const iv=setInterval(()=>{
+    die.textContent=d6();
+    if(++tick>10){clearInterval(iv);finishRoll(+die.textContent);}
+  },55);
+}
+
+function finishRoll(raw){
+  const cur=S.players[S.cidx];
+  const tile=S.map[S._pendingTile];
+  const wx=S.wxOff?'cloudy':S.wx.id;
+
+  let roll=raw;
+  if(wx==='sunny')roll=Math.min(6,roll+1);
+  if(wx==='fog')roll=Math.max(1,roll-1);
+  if(wx==='heat'&&['plain','mountain'].includes(tile.terrain)
+    &&!cur.arts.some(a=>a.id==='hat'))roll=Math.max(1,roll-1);
+  if(cur.role.id==='vibe'&&S.spDone)roll=Math.min(6,roll+1);
+  if(cur.role.id==='memory'&&S.spDone&&cur.tokens>0)
+    roll=Math.min(6,roll+Math.floor(cur.tokens/3));
+
+  const need=S._pendingNeed||TERRAIN[tile.terrain].need||1;
+  const success=roll>=need;
+  S.diceVal=roll;
+
+  const pb=document.getElementById('phase-block');
+  pb.innerHTML=`
+    <div class="res-big" style="background:${success?'#e6f7ee':'rgba(220,50,50,.07)'}">
+      <div class="res-num" style="color:${success?'#22A45D':'#C62828'}">${roll}</div>
+      <div class="res-lbl" style="color:${success?'#178A48':'#b71c1c'}">
+        ${success?'✅ Успех — вход разрешён!':'❌ Нужно '+need+'+ — вход закрыт'}
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:7px">
+      Бросок: ${raw}${roll!==raw?' → '+roll+' (погода/способность)':''} | Нужно: ${need}+
+    </div>
+    <button class="btn-a ${success?'btn-gr':'btn-ol'}" id="ph-btn">
+      ${success?'✓ Войти на клетку':'← Выбрать другую клетку'}
+    </button>`;
+
+  document.getElementById('ph-btn').onclick=()=>{
+    if(success)enterTile(S._pendingTile,roll);
+    else{S.phase='pick';S._pendingTile=null;S._pendingNeed=null;renderGame();renderMap();}
+  };
+
+  if(!success)toast(`❌ Выпало ${roll}, нужно ${need}+`,'#C62828');
+  else toast(`✅ Выпало ${roll} — проход открыт!`);
+}
+
+function enterTile(tileId,roll){
+  const cur=S.players[S.cidx];
+  const tile=S.map[tileId];
+
+  reveal(tileId);
+  cur.tileId=tileId;
+
+  if(tile.artifact){
+    const art=ARTIFACTS.find(a=>a.id===tile.artifact);
+    if(art&&!cur.arts.find(a=>a.id===art.id)){
+      cur.arts.push(art);tile.artifact=null;
+      toast(`${art.icon} Найден: ${art.l}!`,'#F7B731');
+    }
+  }
+  if(tile.isMid&&!cur.reachedMid){cur.reachedMid=true;toast('🎯 Промежуточная цель!');}
+  if(tile.isGoal&&cur.reachedMid){cur.finished=true;toast('🏆 Финиш!');}
+  if(cur.role.id==='memory')cur.tokens++;
+
+  S._pendingTile=null;S._pendingNeed=null;
+
+  if(tile.terrain==='mountain'){S.phase='stop';}
+  else{S.phase='next';}
+
+  renderMap();renderGame();
+  if(S.players.every(p=>p.finished))setTimeout(showVictory,700);
+}
+
+function doEndTurn(){
+  const cur=S.players[S.cidx];
+  if(S.marching&&!cur.finished){
+    S.marching=false;S.phase='role';
+    toast('⚡ Быстрый марш — ещё один ход!');
+    renderGame();renderMap();return;
+  }
+  S.marching=false;
+  S.cidx=(S.cidx+1)%S.players.length;
+  S.spDone=false;S.diceVal=null;S._pendingTile=null;S._pendingNeed=null;
+  if(S.cidx===0){
+    S.round++;
+    S.wx=WEATHER[Math.floor(Math.random()*6)];
+    S.wxOff=false;
+    toast(`${S.wx.icon} Раунд ${S.round}: ${S.wx.l}`);
+    S.phase='wx';
+  }else{S.phase='role';}
+  renderMap();renderGame();
+}
+
+/* ════════════════════════════════════════
+   ПОБЕДА
+════════════════════════════════════════ */
 function showVictory(){
   go('sv');
   const stars=S.round<=8?3:S.round<=14?2:1;
@@ -266,12 +1136,6 @@ function showVictory(){
     stars===3?'Блестящий поход! Быстро и слаженно!':
     stars===2?'Хороший поход! Команда справилась!':
     'Поход завершён — вы дошли вместе!';
-  
-  // Tourist Code message
-  const codeMsg = TOURIST_CODE[Math.floor(Math.random() * TOURIST_CODE.length)];
-  const vDesc = document.getElementById('v-desc');
-  vDesc.innerHTML += `<br><br><strong>📜 Кодекс туриста:</strong> ${codeMsg}`;
-
   const tokens=S.players.reduce((s,p)=>s+p.tokens,0);
   document.getElementById('v-stats').innerHTML=`
     <div class="vstat"><div class="vstat-v">${S.round}</div><div class="vstat-l">Раундов</div></div>
@@ -286,23 +1150,28 @@ function showVictory(){
     </div>`).join('');
 }
 
-/* Adjust map size calculation for smaller field with margins */
-function calcTileSize(){
-  const screenH=window.innerHeight;
-  const screenW=window.innerWidth;
-  const headerH=42;
-  const panelH=Math.min(Math.max(screenH*0.38,190),250); // adjusted
-  const mapH=screenH-headerH-panelH-40; // extra margin
-  const mapW=screenW - 40; // side margins
-
-  const pad=24;
-  const gaps=6*(S.dims-1);
-  const availW=(mapW-pad-gaps)/S.dims;
-  const availH=(mapH-pad-gaps)/S.dims;
-  return Math.floor(Math.min(availW,availH,82));
-}
-
-/* ... other functions remain ... */
+/* ════════════════════════════════════════
+   RESIZE — пересчитываем плитки
+════════════════════════════════════════ */
+window.addEventListener('resize',()=>{
+  if(!S.map.length)return;
+  S._tileSize=calcTileSize();
+  renderMap();
+});
 </script>
 </body>
 </html>
+
+<script>
+const TOURIST_CODES=[
+'Береги природу и не оставляй мусор.',
+'Уважай других участников похода.',
+'Оставляй место стоянки чище, чем нашёл.',
+'Бережно относись к растениям и животным.',
+'Помогай товарищам на маршруте.'
+];
+document.addEventListener('DOMContentLoaded',()=>{
+ const el=document.getElementById('tourist-code');
+ if(el) el.textContent='Кодекс туриста: '+TOURIST_CODES[Math.floor(Math.random()*TOURIST_CODES.length)];
+});
+</script>
