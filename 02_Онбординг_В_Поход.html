@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>В Поход! — Онбординг для участников хакатона</title>
+<style>
+  :root{
+    --forest:#2E6B3E; --forest-dark:#1F4D2C; --moss:#7FB069; --moss-soft:#E7F1DE;
+    --sky:#4E9FC4; --sun:#E6A93C; --fire:#E2602E; --paper:#FBF8F0; --paper2:#F2ECDD;
+    --ink:#243029; --muted:#6b7a6f; --card:#ffffff; --line:#dfe6d9;
+    --shadow:0 6px 22px rgba(31,77,44,.10); --shadow-lg:0 14px 40px rgba(31,77,44,.18);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;color:var(--ink);background:var(--paper);
+    font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+    line-height:1.55;
+  }
+  h1,h2,h3{line-height:1.2;margin:0 0 .4em}
+  a{color:var(--forest)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  .pill{display:inline-block;background:var(--moss-soft);color:var(--forest-dark);
+    border:1px solid #cfe1c4;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(251,248,240,.92);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:9px 20px}
+  nav .brand{font-weight:800;color:var(--forest);margin-right:8px}
+  nav a{font-size:13px;color:var(--ink);text-decoration:none;padding:5px 9px;border-radius:9px}
+  nav a:hover{background:var(--moss-soft)}
+
+  /* HERO */
+  header.hero{
+    background:linear-gradient(160deg,var(--forest) 0%,var(--forest-dark) 55%,#163a20 100%);
+    color:#fff;padding:54px 0 64px;position:relative;overflow:hidden}
+  header.hero:after{content:"";position:absolute;inset:auto 0 -2px 0;height:60px;
+    background:radial-gradient(120% 60px at 50% 100%,var(--paper) 0,var(--paper) 60%,transparent 61%)}
+  .hero h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:.3px}
+  .hero .lead{font-size:clamp(16px,2.4vw,20px);max-width:720px;opacity:.95}
+  .hero .ridge{font-size:42px;letter-spacing:6px;opacity:.9;margin-bottom:6px}
+  .hero .tags{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+  .hero .tags .pill{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.3)}
+
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(22px,3.2vw,30px);color:var(--forest-dark);display:flex;gap:10px;align-items:center}
+  section .sub{color:var(--muted);margin:-4px 0 22px;font-size:15px}
+  .kbadge{font-size:12px;font-weight:800;letter-spacing:.5px;padding:2px 8px;border-radius:7px;
+    background:var(--sun);color:#3a2a06;text-transform:uppercase}
+
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+  /* ROLE CARDS */
+  .role{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;cursor:pointer;box-shadow:var(--shadow);transition:.2s;position:relative}
+  .role:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--moss)}
+  .role .emoji{font-size:34px}
+  .role h3{margin:8px 0 2px;font-size:18px;color:var(--forest-dark)}
+  .role .quote{color:var(--muted);font-style:italic;font-size:13px;min-height:34px}
+  .role .more{max-height:0;overflow:hidden;transition:max-height .35s ease;opacity:0}
+  .role.open .more{max-height:420px;opacity:1;margin-top:10px}
+  .role .ab{font-size:14px;margin:8px 0;padding-left:10px;border-left:3px solid var(--moss)}
+  .role .ab b{color:var(--forest)}
+  .role .grow{font-size:12px;color:var(--sky);font-weight:700;margin-top:8px}
+  .role .hint{position:absolute;top:14px;right:14px;font-size:11px;color:var(--muted)}
+
+  /* MECHANIC CHIPS */
+  .chip{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;
+    box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+  .chip .ic{font-size:26px;flex:0 0 auto}
+  .chip h4{margin:0 0 3px;font-size:15px}
+  .chip p{margin:0;font-size:13.5px;color:var(--muted)}
+  .chip.hard{border-left:4px solid var(--fire)}
+  .chip.easy{border-left:4px solid var(--moss)}
+
+  /* TURN LOOP */
+  .loop{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;box-shadow:var(--shadow)}
+  .steps{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+  .step{flex:1;min-width:120px;background:var(--paper2);border-radius:12px;padding:12px;
+    border:2px solid transparent;transition:.25s;font-size:13.5px}
+  .step.active{border-color:var(--forest);background:#fff;box-shadow:var(--shadow)}
+  .step .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--forest);
+    color:#fff;text-align:center;line-height:22px;font-size:12px;font-weight:800;margin-right:6px}
+  .dicewrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:6px}
+  .die{width:58px;height:58px;border-radius:14px;background:#fff;border:2px solid var(--forest-dark);
+    display:grid;place-items:center;font-size:30px;font-weight:800;color:var(--forest-dark);
+    box-shadow:var(--shadow)}
+  .die.roll{animation:shake .5s}
+  @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-12deg) scale(1.05)}75%{transform:rotate(12deg) scale(1.05)}}
+  .btn{background:var(--forest);color:#fff;border:0;border-radius:11px;padding:10px 16px;
+    font-size:14px;font-weight:700;cursor:pointer;transition:.15s}
+  .btn:hover{background:var(--forest-dark)}
+  .btn.ghost{background:transparent;color:var(--forest);border:1.5px solid var(--forest)}
+
+  /* WIN ROUTE */
+  .route{background:linear-gradient(180deg,#eef6ea,#fff);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+  .route svg{width:100%;height:auto;display:block}
+
+  /* TIERS */
+  .tier{border-radius:16px;padding:16px;color:#fff}
+  .tier h3{margin:0 0 8px;font-size:16px;display:flex;align-items:center;gap:8px}
+  .tier ul{margin:0;padding-left:18px;font-size:13.5px;opacity:.97}
+  .tier.must{background:linear-gradient(160deg,#2E6B3E,#1F4D2C)}
+  .tier.should{background:linear-gradient(160deg,#4E9FC4,#356f8c)}
+  .tier.could{background:linear-gradient(160deg,#E6A93C,#b9832a)}
+  .tier.wont{background:linear-gradient(160deg,#8a8f88,#5f655e)}
+
+  /* RUBRIC */
+  .rub{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px;box-shadow:var(--shadow)}
+  .bar{margin:12px 0}
+  .bar .top{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:5px}
+  .bar .track{height:14px;background:var(--paper2);border-radius:999px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,var(--moss),var(--forest))}
+
+  table.tbl{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;
+    box-shadow:var(--shadow);font-size:14px}
+  table.tbl th{background:var(--forest);color:#fff;text-align:left;padding:10px 12px;font-size:13px}
+  table.tbl td{padding:9px 12px;border-top:1px solid var(--line)}
+  table.tbl tr:nth-child(even) td{background:#faf8f1}
+
+  .quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;
+    box-shadow:var(--shadow);margin-bottom:10px;cursor:pointer}
+  .quiz .q{font-weight:700}
+  .quiz .a{max-height:0;overflow:hidden;transition:max-height .3s;color:var(--forest-dark);font-size:14px}
+  .quiz.open .a{max-height:140px;margin-top:8px}
+
+  footer{padding:34px 0;color:var(--muted);font-size:13px}
+  .note{background:var(--moss-soft);border:1px solid #cfe1c4;border-radius:12px;padding:12px 14px;
+    font-size:13.5px;color:var(--forest-dark)}
+  .twocol{display:grid;grid-template-columns:1.3fr 1fr;gap:22px}
+  @media(max-width:820px){.twocol{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <span class="brand">🏕 В Поход!</span>
+  <a href="#intro">О игре</a>
+  <a href="#roles">Роли</a>
+  <a href="#terrain">Местность</a>
+  <a href="#weather">Погода</a>
+  <a href="#artifacts">Артефакты</a>
+  <a href="#turn">Ход</a>
+  <a href="#coop">Кооп</a>
+  <a href="#win">Победа</a>
+  <a href="#tiers">Приоритеты</a>
+  <a href="#score">Оценка</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="ridge">⛰ 🌲 🏕 🌲 ⛰</div>
+  <span class="pill">Онбординг участника хакатона · Форум «Шерегеш»</span>
+  <h1>«В Поход!» — соберите команду и дойдите вместе</h1>
+  <p class="lead">Вы делаете <b>цифровую кооперативную игру-путешествие</b> по мотивам настолки бренда
+  «Походы Первых». Команда из 2–6 игроков идёт по процедурной карте от Базы к Цели, помогая друг другу.
+  Эта страница за 5 минут погрузит вас в механику и канон.</p>
+  <div class="tags">
+    <span class="pill">2–6 игроков · кооп</span>
+    <span class="pill">25–30 минут</span>
+    <span class="pill">8+ – 99 лет</span>
+    <span class="pill">Заказчик: АНО «Больше, чем путешествие»</span>
+  </div>
+</div></header>
+
+<!-- INTRO -->
+<section id="intro"><div class="wrap">
+  <h2>🎯 Зачем и про что игра</h2>
+  <p class="sub">Миссия, тон и что брать из референса</p>
+  <div class="twocol">
+    <div>
+      <p><b>Миссия.</b> Вдохновить детей и подростков идти в реальные походы, учиться работе в команде
+      и ощущать себя частью настоящей команды. Игра — инструмент вовлечения сообщества
+      «Походы Первых. Больше, чем путешествие» (БЧП).</p>
+      <p><b>Тон.</b> Тёплый, добрый, приключенческий. Не выживание, а уютное совместное путешествие, где
+      приятно помогать. Низкий порог входа: понятно за пару минут, ребёнок 8+ играет наравне со взрослым.</p>
+      <p><b>Победа — командная.</b> Важна синергия ролей, а не гонка. Проигрыша нет — есть мягкий рейтинг
+      и «история похода» для публикации.</p>
+    </div>
+    <div>
+      <div class="note">
+        <b>Референс «Как победить дракона»</b> — берём из него только <b>две вещи</b>:
+        <br>① кооп-дух «побеждаем вместе»;<br>② низкий порог входа.
+        <br>Механику референса <b>не копируем</b> — у «В Поход!» своя система: плитки + роли + погода.
+      </div>
+      <p style="margin-top:14px"><span class="kbadge">критерий №1</span> &nbsp;Соответствие этим правилам и
+      бренду «Больше, чем путешествие» — главный критерий оценки (вес 35%).</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ROLES -->
+<section id="roles"><div class="wrap">
+  <h2>🧑‍🤝‍🧑 Шесть ролей <span class="kbadge">кликабельно</span></h2>
+  <p class="sub">У каждой роли — <b>1 постоянное + 1 особое</b> действие. Нет слабых и доминирующих. Нажмите на карточку.</p>
+  <div class="grid g3" id="roleGrid"></div>
+  <p class="note" style="margin-top:16px">⚙️ Баланс: доп-бросок есть только у <b>Разведчика</b>. У Хранителя лагеря
+  убраны бонусы «стоит рядом», у Хранителя впечатлений «временная цель» убрана — жетоны влияют на финальную оценку, не на цель.</p>
+</div></section>
+
+<!-- TERRAIN -->
+<section id="terrain"><div class="wrap">
+  <h2>🗺️ Пять типов местности</h2>
+  <p class="sub">3 простых / 2 сложных. Карта — ≤36 плиток, 3 готовых размера (М/С/Б), сложные плитки — ближе к центру.</p>
+  <div class="grid g3" id="terGrid"></div>
+  <p class="note" style="margin-top:14px">«Песок» убран — его роль играет погодная «Жара». «Каменистая» вошла в «Горы».</p>
+</div></section>
+
+<!-- WEATHER -->
+<section id="weather"><div class="wrap">
+  <h2>🌦️ Шесть погодных карт</h2>
+  <p class="sub">Значки вместо текста, штрафы только −1/−2. Тянется одна на весь раунд — общая для всех.</p>
+  <div class="grid g3" id="weaGrid"></div>
+</div></section>
+
+<!-- ARTIFACTS -->
+<section id="artifacts"><div class="wrap">
+  <h2>🎒 Четыре артефакта</h2>
+  <p class="sub">По одному простому эффекту. Часть — в старте (Спасатель 1–2), часть — находки на карте.</p>
+  <div class="grid g4" id="artGrid"></div>
+</div></section>
+
+<!-- TURN LOOP -->
+<section id="turn"><div class="wrap">
+  <h2>🔁 Ход-цикл <span class="kbadge">интерактив</span></h2>
+  <p class="sub">Максимум 2 броска за ход. Нажимайте «Следующий шаг».</p>
+  <div class="loop">
+    <div class="steps" id="steps"></div>
+    <div class="dicewrap">
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Бросок 1 · Погода тура</div>
+        <div class="die" id="dieW">☁️</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Бросок 2 · Шаг игрока</div>
+        <div class="die" id="dieS">•</div>
+      </div>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <button class="btn" id="nextStep">Следующий шаг →</button>
+        <button class="btn ghost" id="resetStep">Сброс</button>
+      </div>
+    </div>
+    <p id="stepNote" style="margin:14px 0 0;font-size:14px;color:var(--forest-dark);font-weight:600"></p>
+  </div>
+</div></section>
+
+<!-- COOP -->
+<section id="coop"><div class="wrap">
+  <h2>🤝 Кооп-взаимодействие — сердце игры</h2>
+  <p class="sub">Без этого кооп не работает. Минимум для зачёта — обмен артефактами.</p>
+  <div class="grid g3">
+    <div class="chip easy"><div class="ic">🔄</div><div><h4>Обмен артефактами</h4><p>Игроки передают предметы друг другу, чтобы пройти сложный участок. <b>Обязательно.</b></p></div></div>
+    <div class="chip easy"><div class="ic">🧩</div><div><h4>Совместные задачи</h4><p>Напр.: доставить артефакт к Промежуточной цели; собрать несколько жетонов истории.</p></div></div>
+    <div class="chip easy"><div class="ic">🃏</div><div><h4>Командные карты</h4><p>Небольшой набор: «Второе дыхание» +1 всем, «Привал» снять штрафы, «Сплочённость» переброс.</p></div></div>
+  </div>
+  <p class="note" style="margin-top:14px">❌ Убраны микробонусы «+1, если стоишь рядом» — взаимодействие должно быть осмысленным, а не пассивным.</p>
+</div></section>
+
+<!-- WIN -->
+<section id="win"><div class="wrap">
+  <h2>🏁 Маршрут победы и рейтинг <span class="kbadge">интерактив</span></h2>
+  <p class="sub">База → Промежуточная цель → Главная цель. Возврат не нужен. Проигрыша нет.</p>
+  <div class="route">
+    <svg viewBox="0 0 900 200" id="routeSvg" aria-label="Маршрут похода">
+      <path id="trail" d="M70,150 C220,60 320,60 450,120 S720,180 830,70" fill="none"
+        stroke="#bcd3b0" stroke-width="10" stroke-linecap="round" stroke-dasharray="6 14"/>
+      <g font-size="13" font-weight="700" text-anchor="middle" fill="#1F4D2C">
+        <circle cx="70" cy="150" r="14" fill="#2E6B3E"/><text x="70" y="184">🏠 База</text>
+        <circle cx="450" cy="120" r="14" fill="#E6A93C"/><text x="450" y="160">⛳ Промежуточная</text>
+        <circle cx="830" cy="70" r="14" fill="#E2602E"/><text x="830" y="46">🎯 Главная цель</text>
+      </g>
+      <text id="hiker" font-size="26" x="70" y="156" text-anchor="middle">🥾</text>
+    </svg>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap">
+      <button class="btn" id="goHike">В поход! 🚶</button>
+      <span id="stars" style="font-size:22px"></span>
+      <span id="storyOut" style="font-size:14px;color:var(--muted)"></span>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="chip"><div class="ic">⭐⭐⭐</div><div><h4>Три звезды</h4><p>Дошли быстро + задействованы все роли + собрана «история».</p></div></div>
+    <div class="chip"><div class="ic">⭐⭐</div><div><h4>Две звезды</h4><p>Команда дошла до Главной цели.</p></div></div>
+    <div class="chip"><div class="ic">⭐</div><div><h4>Одна звезда</h4><p>Дошли, но за большое число раундов.</p></div></div>
+  </div>
+</div></section>
+
+<!-- TIERS -->
+<section id="tiers"><div class="wrap">
+  <h2>📦 Границы объёма</h2>
+  <p class="sub">Канон = гибрид: упрощённое ядро обязательно, богатство концепции — опциональные уровни.</p>
+  <div class="grid g4">
+    <div class="tier must"><h3>✅ Обязательно</h3><ul>
+      <li>Карта 5 типов (3 размера, ≤36)</li><li>6 ролей (1+1)</li><li>Ход ≤2 броска</li>
+      <li>Маршрут База→промеж.→Цель</li><li>Взаимодействие: обмен артефактами</li>
+      <li>Финал: звёзды + история</li><li>Поочерёдный режим 2–6</li><li>Стиль «Больше, чем путешествие»</li></ul></div>
+    <div class="tier should"><h3>➕ Желательно</h3><ul>
+      <li>6 погодных карт</li><li>4 артефакта</li><li>Полный набор взаимодействия (задачи + карты)</li>
+      <li>Сетевое лобби в реальном времени</li></ul></div>
+    <div class="tier could"><h3>✨ Опционально</h3><ul>
+      <li>Расширенные уровни концепции</li><li>Мини-приложение Телеграм/ВКонтакте + публикация</li><li>«Поход дня» (асинхронный)</li>
+      <li>Таблица результатов</li><li>Режим «гонка»</li><li>Звук, анимации, обучение</li></ul></div>
+    <div class="tier wont"><h3>⛔ Не входит</h3><ul>
+      <li>Серверный подбор игроков</li><li>Монетизация</li><li>Публикация в магазинах</li></ul></div>
+  </div>
+  <div class="twocol" style="margin-top:18px">
+    <div class="note"><b>Платформа — любой форм-фактор.</b> Рекомендованный (необязательный) приоритет:
+      <b>мобильное приложение → мини-приложение Телеграм → мини-приложение ВКонтакте → браузерная версия</b>. На оценку влияет игра, а не оболочка.</div>
+    <div class="note"><b>Сетевая игра.</b> Цель — режим в реальном времени; гарантированный минимум для показа —
+      <b>поочерёдный режим</b> (по очереди на одном устройстве), чтобы совместное прохождение всегда было играбельно.</div>
+  </div>
+</div></section>
+
+<!-- SCORE -->
+<section id="score"><div class="wrap">
+  <h2>🏅 Как вас будут оценивать</h2>
+  <p class="sub">Обязательный порог (пройдено/не пройдено): прототип запускается и проходится показательная партия. Иначе работа не оценивается по существу.</p>
+  <div class="rub" id="rubric"></div>
+  <h3 style="margin-top:26px">🎬 Что показать на питче</h3>
+  <ol>
+    <li><b>Живой показ</b>: пройти совместную партию от старта до победы (поочерёдного режима достаточно).</li>
+    <li>Показать: выбор роли → генерацию карты → ход-цикл → погоду/местности → кооп → финал со звёздами и «историей».</li>
+    <li>Кратко: платформа; что из обязательного/желательного/опционального сделано; как раскрыта верность бренду.</li>
+    <li>Ссылка на сборку или установочный файл.</li>
+  </ol>
+
+  <h3 style="margin-top:26px">🧠 Проверь, что понял</h3>
+  <div id="quizBox"></div>
+</div></section>
+
+<footer><div class="wrap">
+  <p>Этот онбординг — краткое погружение в механику и канон игры «В Поход!».</p>
+  <p>Заказчик — АНО «Больше, чем путешествие» · программа «Походы Первых. Больше, чем путешествие». Стиль и палитра — временные, заменить на официальные бренд-материалы.</p>
+</div></footer>
+
+<script>
+/* ---------- DATA ---------- */
+const roles = [
+  {e:"🧭",n:"Разведчик",q:"«Я пойду первым»",
+   pas:"В начале своего хода открывает 1 соседнюю закрытую плитку.",
+   spe:"(1×/партия) «Быстрый марш» — единственный в игре доп-шаг/доп-бросок.",grow:"Лидерство, планирование"},
+  {e:"🔬",n:"Исследователь",q:"«Почему здесь такие камни?»",
+   pas:"Игнорирует 1 эффект сложной местности на своём ходу.",
+   spe:"(1×/партия) «Разведка карты» — открыть любую 1 закрытую плитку на поле.",grow:"Любознательность, анализ"},
+  {e:"🏕️",n:"Хранитель лагеря",q:"«Кто голоден?»",
+   pas:"Раз в свой ход снимает 1 штраф (усталость) у любого игрока — без требования соседства.",
+   spe:"(1×/партия) «Тёплый привал» — отменяет погоду для всей команды на 1 тур.",grow:"Ответственность, забота"},
+  {e:"🎶",n:"Хранитель атмосферы",q:"«Давайте споём!»",
+   pas:"Раз в раунд даёт +1 к шагу любому другому игроку.",
+   spe:"(2×/партия) Отменяет негативный эффект у любого игрока.",grow:"Эмпатия, дипломатия"},
+  {e:"📸",n:"Хранитель впечатлений",q:"«Какой закат!»",
+   pas:"За каждую новую открытую плитку команда получает жетон истории.",
+   spe:"(1×/партия) «Памятный кадр» — превратить несколько жетонов в разовый бонус команде.",grow:"Самовыражение, память"},
+  {e:"⛑️",n:"Спасатель",q:"«Я выведу. Спокойно.»",
+   pas:"Раз в свой ход отменяет 1 серьёзный штраф у себя или любого игрока.",
+   spe:"(1×/партия) «Спасательная операция» — переместить любого на соседнюю клетку. Старт: 1–2 артефакта.",grow:"Безопасность, стрессоустойчивость"},
+];
+const terr = [
+  {i:"🟩",n:"Равнина",c:"easy",t:"Простой",p:"Нейтрально, без штрафов."},
+  {i:"🌲",n:"Лес",c:"easy",t:"Простой",p:"«Скрытая местность»: не видно соседние закрытые плитки."},
+  {i:"💧",n:"Водоём",c:"easy",t:"Простой",p:"Переправа = 2 очка (с плавсредством — 1). Без броска."},
+  {i:"🟫",n:"Болото",c:"hard",t:"Сложный",p:"Вход только на «6» или со спецснаряжением."},
+  {i:"⛰️",n:"Горы",c:"hard",t:"Сложный",p:"Вход останавливает ход."},
+];
+const wea = [
+  {i:"☀️",n:"Ясно",p:"+1 к первому шагу для всех."},
+  {i:"☁️",n:"Облачность",p:"Нейтрально."},
+  {i:"🌧️",n:"Дождь",p:"Вход на сложную местность стоит +1 очко."},
+  {i:"🔥",n:"Жара",p:"На открытой местности следующий бросок −1."},
+  {i:"🌬️",n:"Ветер",p:"Нельзя ходить назад."},
+  {i:"🌫️",n:"Туман",p:"Все двигаются на 1 клетку меньше (минимум 1)."},
+];
+const arts = [
+  {i:"🧭",n:"Компас",p:"Всегда видны соседние плитки (снимает «скрытость» леса вокруг)."},
+  {i:"🛶",n:"Плавсредство",p:"Переправа через водоём стоит 1 очко вместо 2."},
+  {i:"🧢",n:"Головной убор",p:"Игнорирует погодную «Жару»."},
+  {i:"🎒",n:"Спецснаряжение",p:"Вход в болото без «6» / игнор 1 сложной местности за ход."},
+];
+const steps = [
+  {t:"Начало раунда: определяется погода тура",note:"Один бросок на всю команду — погода действует весь раунд.",die:"W"},
+  {t:"(опц.) Способность роли",note:"Можно применить постоянное действие своей роли.",die:null},
+  {t:"Бросок шага (шестигранный кубик)",note:"Второй и последний бросок за ход — сколько очков движения у игрока.",die:"S"},
+  {t:"Движение по плиткам",note:"Тратим очки на соседние плитки, оплачивая стоимость местности.",die:null},
+  {t:"Применение эффектов",note:"Применяем эффекты местности и погоды текущего тура.",die:null},
+  {t:"(опц.) Кооп-действие",note:"Обмен артефактом, помощь товарищу или командная карта. Передаём ход.",die:null},
+];
+const rubric = [
+  {n:"Верность канону и бренду",w:35},
+  {n:"Играбельность и завершённость совместного прохождения",w:30},
+  {n:"Визуал, удобство и «теплота»",w:20},
+  {n:"Инновация и социальное распространение",w:15},
+];
+const quiz = [
+  {q:"Нужно ли возвращаться на Базу, чтобы победить?",a:"Нет. Победа = вся команда на Главной цели, посетив Промежуточную. Возврата нет."},
+  {q:"Сколько бросков кубика максимум за один ход?",a:"Два: погода тура (общая) и шаг игрока. Бросков на водоёме и доп-бросков нет (кроме «Быстрого марша» Разведчика)."},
+  {q:"Что происходит, если команда не успевает?",a:"Проигрыша нет. Команда всё равно доходит — отличается только рейтинг (1–3 звезды) и «история похода»."},
+  {q:"Какой минимум нужен для зачёта по сетевой игре?",a:"Поочерёдный режим (по очереди на одном устройстве). Сетевая игра в реальном времени — желательный, но не обязательный слой."},
+];
+
+/* ---------- RENDER ---------- */
+const el = (h)=>{const d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild};
+
+const rg=document.getElementById('roleGrid');
+roles.forEach(r=>{
+  const c=el(`<div class="role" tabindex="0">
+    <span class="hint">нажми ▾</span>
+    <div class="emoji">${r.e}</div>
+    <h3>${r.n}</h3>
+    <div class="quote">${r.q}</div>
+    <div class="more">
+      <div class="ab"><b>Постоянное:</b> ${r.pas}</div>
+      <div class="ab"><b>Особое:</b> ${r.spe}</div>
+      <div class="grow">🌱 Воспитывает: ${r.grow}</div>
+    </div></div>`);
+  const tog=()=>c.classList.toggle('open');
+  c.addEventListener('click',tog);
+  c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();tog();}});
+  rg.appendChild(c);
+});
+
+const tgrid=document.getElementById('terGrid');
+terr.forEach(t=>tgrid.appendChild(el(
+  `<div class="chip ${t.c}"><div class="ic">${t.i}</div><div><h4>${t.n} · <span style="color:var(--muted);font-weight:600">${t.t}</span></h4><p>${t.p}</p></div></div>`)));
+
+const wgrid=document.getElementById('weaGrid');
+wea.forEach(w=>wgrid.appendChild(el(
+  `<div class="chip"><div class="ic">${w.i}</div><div><h4>${w.n}</h4><p>${w.p}</p></div></div>`)));
+
+const agrid=document.getElementById('artGrid');
+arts.forEach(a=>agrid.appendChild(el(
+  `<div class="chip"><div class="ic">${a.i}</div><div><h4>${a.n}</h4><p>${a.p}</p></div></div>`)));
+
+const stepsBox=document.getElementById('steps');
+steps.forEach((s,idx)=>stepsBox.appendChild(el(
+  `<div class="step" data-i="${idx}"><span class="n">${idx+1}</span>${s.t}</div>`)));
+
+const rb=document.getElementById('rubric');
+rubric.forEach(r=>rb.appendChild(el(
+  `<div class="bar"><div class="top"><span>${r.n}</span><span>${r.w}%</span></div>
+   <div class="track"><div class="fill" style="width:0%" data-w="${r.w}"></div></div></div>`)));
+// animate bars when visible
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+  rb.querySelectorAll('.fill').forEach(f=>f.style.width=(f.dataset.w*2.4)+'%');obs.disconnect();}});});
+obs.observe(rb);
+
+const qb=document.getElementById('quizBox');
+quiz.forEach(z=>{
+  const c=el(`<div class="quiz"><div class="q">❓ ${z.q}</div><div class="a">✅ ${z.a}</div></div>`);
+  c.addEventListener('click',()=>c.classList.toggle('open'));
+  qb.appendChild(c);
+});
+
+/* ---------- TURN LOOP ---------- */
+let cur=-1;
+const stepEls=()=>[...document.querySelectorAll('.step')];
+const dieS=document.getElementById('dieS'), dieW=document.getElementById('dieW');
+const stepNote=document.getElementById('stepNote');
+function rollDie(node,faces){node.classList.remove('roll');void node.offsetWidth;node.classList.add('roll');
+  let n=0;const iv=setInterval(()=>{node.textContent=faces[Math.floor(Math.random()*faces.length)];
+    if(++n>6){clearInterval(iv);}},60);}
+function showStep(i){
+  stepEls().forEach(s=>s.classList.toggle('active',+s.dataset.i===i));
+  const s=steps[i]; stepNote.textContent="▸ "+s.note;
+  if(s.die==='W') rollDie(dieW,["☀️","☁️","🌧️","🔥","🌬️","🌫️"]);
+  if(s.die==='S') rollDie(dieS,["1","2","3","4","5","6"]);
+}
+document.getElementById('nextStep').addEventListener('click',()=>{cur=(cur+1)%steps.length;showStep(cur);});
+document.getElementById('resetStep').addEventListener('click',()=>{cur=-1;
+  stepEls().forEach(s=>s.classList.remove('active'));stepNote.textContent="";
+  dieS.textContent="•";dieW.textContent="☁️";});
+
+/* ---------- WIN ROUTE ---------- */
+const trail=document.getElementById('trail'), hiker=document.getElementById('hiker');
+const starsOut=document.getElementById('stars'), storyOut=document.getElementById('storyOut');
+const stories=["Прошли через туман в лесу и нашли компас.","Хранитель лагеря спас всех от усталости на болоте.",
+  "Под дождём команда сплотилась у Промежуточной цели.","Разведчик первым увидел Главную цель на закате."];
+function hike(){
+  const len=trail.getTotalLength(); starsOut.textContent=""; storyOut.textContent="";
+  let t=0; const dur=2600, t0=performance.now();
+  function frame(now){
+    t=Math.min(1,(now-t0)/dur);
+    const pt=trail.getPointAtLength(t*len);
+    hiker.setAttribute('x',pt.x); hiker.setAttribute('y',pt.y-8);
+    if(t<1) requestAnimationFrame(frame);
+    else{ const st=1+Math.floor(Math.random()*3);
+      starsOut.textContent="⭐".repeat(st)+"☆".repeat(3-st);
+      storyOut.textContent="История похода: "+stories[Math.floor(Math.random()*stories.length)];}
+  }
+  requestAnimationFrame(frame);
+}
+document.getElementById('goHike').addEventListener('click',hike);
+</script>
+</body>
+</html>
